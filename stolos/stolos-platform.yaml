@@ -1,0 +1,53 @@
+typemeta:
+  kind: StolosPlatform
+  apiVersion: stolos.cloud/v1alpha
+metadata:
+  name: stolos-platform
+spec:
+  clusterName: jo-cluster
+  baseDomain: stolos.jo
+  metallb:
+    deploy: true
+    configureArp: true
+    arpIp: 10.0.0.4
+    namespace: metallb-system
+    version: v0.15.2
+  argocd:
+    deploy: true
+    namespace: argocd
+    version: 7.8.26
+    subdomain: argocd
+    imageUpdaterVersion: v0.13.1
+    repositoryOwner: stolos-cloud
+    repositoryName: stolos-jo
+    repositoryRevision: feature/yoke
+  contour:
+    deploy: true
+    namespace: projectcontour
+    version: release-1.33
+  certManager:
+    deploy: true
+    version: v1.18.2
+    namespace: cert-manager
+    clusterIssuerProd: letsencrypt-prod
+    clusterIssuerStaging: letsencrypt-staging
+    defaultClusterIssuer: letsencrypt-staging
+    selfSigned: true
+    email: stolos@stolos.cloud
+  cnpg:
+    deploy: true
+    namespace: cnpg-system
+    version: 0.26.0
+    barmanVersion: v0.6.0
+  stolosPlatform:
+    deploy: true
+    namespace: stolos-system
+    backendSubdomain: api
+    frontendSubdomain: k8s
+    database:
+      image: ghcr.io/cloudnative-pg/postgresql:17.6
+      instanceCount: 1
+      sizeInGigabytes: 2
+    defaultAdminPassword: Password1!
+    defaultAdminEmail: admin@stolos.cloud
+    pathToYaml: stolos/stolos-platform.yaml
