@@ -1,0 +1,25 @@
+typemeta:
+    kind: Namespace
+    apiversion: v1
+objectmeta:
+    name: app-stolos-app1
+    generatename: ""
+    namespace: ""
+    selflink: ""
+    uid: ""
+    resourceversion: ""
+    generation: 0
+    creationtimestamp: "0001-01-01T00:00:00Z"
+    deletiontimestamp: null
+    deletiongraceperiodseconds: null
+    labels:
+        managed-by: stolos
+    annotations: {}
+    ownerreferences: []
+    finalizers: []
+    managedfields: []
+spec:
+    finalizers: []
+status:
+    phase: ""
+    conditions: []
