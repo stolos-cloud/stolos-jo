@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+    name: app3-apps
+    namespace: argocd
+spec:
+    generators:
+        - git:
+            repoURL: https://github.com/stolos-cloud/stolos-jo
+            revision: HEAD
+            directories:
+                - path: namespaces/app3/apps/*
+    template:
+        metadata:
+            name: app3-{{path.basename}}
+        spec:
+            project: default
+            source:
+                repoURL: https://github.com/stolos-cloud/stolos-jo
+                targetRevision: HEAD
+                path: '{{path}}'
+            destination:
+                server: https://kubernetes.default.svc
+                namespace: app-app3
+            syncPolicy:
+                automated:
+                    prune: true
+                    selfHeal: true
+                syncOptions:
+                    - CreateNamespace=true
