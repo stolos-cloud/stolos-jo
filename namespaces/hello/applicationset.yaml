@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+    name: hello-apps
+    namespace: argocd
+spec:
+    generators:
+        - git:
+            repoURL: https://github.com/stolos-cloud/stolos-jo
+            revision: HEAD
+            directories:
+                - path: namespaces/hello/apps/*
+    template:
+        metadata:
+            name: hello-{{path.basename}}
+        spec:
+            project: default
+            source:
+                repoURL: https://github.com/stolos-cloud/stolos-jo
+                targetRevision: HEAD
+                path: '{{path}}'
+            destination:
+                server: https://kubernetes.default.svc
+                namespace: app-hello
+            syncPolicy:
+                automated:
+                    prune: true
+                    selfHeal: true
+                syncOptions:
+                    - CreateNamespace=true
